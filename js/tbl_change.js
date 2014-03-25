@@ -147,32 +147,6 @@ function isTime(val)
     return tmexp.test(val);
 }
 
-
-/* function to apply the same function to all further or previous insert forms */
-function applyThisFunctionToAllInsertions(selectName) {
-
-
-	var nbFieldInInsert = $("select[name='"+selectName+"']").parent().parent().siblings().length+1;
-	var allFields = $('select[id*="field_"]');
-
-	var selected;
-
-	for(selected=0; selected<allFields.length; ++selected) {
-		if($(allFields[selected]).attr("name") == selectName)
-			break;
-	}
-
-	selected = selected % nbFieldInInsert;
-
-	for(var i=0; i<allFields.length; ++i) {
-		if(i % nbFieldInInsert == selected) {
-			$(allFields[i]).val($("select[name='"+selectName+"']").val());
-		}
-	}
-
-}
-
-
 function verificationsAfterFieldChange(urlField, multi_edit, theType)
 {
     var evt = window.event || arguments.callee.caller.arguments[0];
@@ -420,7 +394,6 @@ AJAX.registerOnload('tbl_change.js', function () {
 
                     var hashed_field = name_parts[1].match(/\[(.+)\]/)[1];
                     $this_element.attr('name', new_name);
-					$this_element.siblings().attr('onclick', "applyThisFunctionToAllInsertions('"+new_name+"')");
 
                     /** If element is select[name*='funcs'], update id */
                     if ($this_element.is("select[name*='funcs']")) {
